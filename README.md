@@ -46,8 +46,23 @@ experiment with different weightings without touching the rest of the code.
 ```
 python game.py
 ```
-You'll be asked whether you want to play, and which heuristic(s) the AI
-should use.
+You'll be asked whether you want to play, which heuristic(s) the AI
+should use, their weights, and the search depth.
+
+**Or configure everything up front with flags** (anything you leave out is
+still asked interactively):
+```
+python game.py --mode ai --depth 6 --p1-heuristic heuristic_3 --p1-weights 1,0.5,2 --p2-heuristic heuristic_2 --p2-weights 1,1
+```
+
+| Flag | What it sets |
+|---|---|
+| `--mode {human,ai}` | `human` = you play Player 1 against the AI; `ai` = AI vs AI. |
+| `--depth N` | Minimax search depth. |
+| `--p1-heuristic`, `--p2-heuristic` | One of `heuristic_1`..`heuristic_4` per player (`--p1-heuristic` is only used in `ai` mode). |
+| `--p1-weights`, `--p2-weights` | Comma-separated weights (`w1,w2,...`) for that player's heuristic, e.g. `1,0.5,2`. Ignored for `heuristic_1`, which has no weights. |
+
+Run `python game.py -h` for the full flag reference.
 
 **Compare heuristics automatically:**
 ```
