@@ -1,11 +1,4 @@
-"""
-Play a game of Mancala from the console: Human vs AI, or AI vs AI.
-Run with:  python game.py
-Or configure everything up front, e.g.:
-  python game.py --mode ai --depth 6 --p1-heuristic heuristic_3 --p1-weights 1,0.5,2 \
-      --p2-heuristic heuristic_2 --p2-weights 1,1
-Anything left unset on the command line is asked for interactively.
-"""
+
 
 import argparse
 from functools import partial
@@ -14,7 +7,6 @@ from board import MancalaBoard, PLAYER_1, PLAYER_2, other_player
 from ai import choose_move
 from heuristics import ALL_HEURISTICS
 
-# Number of tunable w1..wN weights each heuristic accepts.
 WEIGHT_COUNTS = {
     "heuristic_1": 0,
     "heuristic_2": 2,

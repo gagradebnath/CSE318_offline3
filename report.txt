@@ -1,0 +1,32 @@
+Running every pairwise matchup, 50 games each, search depth 4.
+
+heuristic_1 vs heuristic_2  over 50 games (starting player randomized):
+  heuristic_1 wins: 12  (24.0%)
+  heuristic_2 wins: 34  (68.0%)
+  ties:           4  (8.0%)
+
+heuristic_1 vs heuristic_3  over 50 games (starting player randomized):
+  heuristic_1 wins: 14  (28.0%)
+  heuristic_3 wins: 32  (64.0%)
+  ties:           4  (8.0%)
+
+heuristic_1 vs heuristic_4  over 50 games (starting player randomized):
+  heuristic_1 wins: 8  (16.0%)
+  heuristic_4 wins: 40  (80.0%)
+  ties:           2  (4.0%)
+
+heuristic_2 vs heuristic_3  over 50 games (starting player randomized):
+  heuristic_2 wins: 25  (50.0%)
+  heuristic_3 wins: 22  (44.0%)
+  ties:           3  (6.0%)
+
+heuristic_2 vs heuristic_4  over 50 games (starting player randomized):
+  heuristic_2 wins: 26  (52.0%)
+  heuristic_4 wins: 23  (46.0%)
+  ties:           1  (2.0%)
+
+heuristic_3 vs heuristic_4  over 50 games (starting player randomized):
+  heuristic_3 wins: 20  (40.0%)
+  heuristic_4 wins: 28  (56.0%)
+  ties:           2  (4.0%)
+

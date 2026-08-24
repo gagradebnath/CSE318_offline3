@@ -1,9 +1,5 @@
-"""
-Run computer-vs-computer Mancala games to compare heuristics, as asked for
-in the assignment ("determine win-loss ratio by running 100 games").
 
-Run with:  python experiment.py
-"""
+import random
 
 from board import MancalaBoard, PLAYER_1, PLAYER_2
 from ai import choose_move
@@ -11,7 +7,7 @@ from heuristics import ALL_HEURISTICS
 
 
 def play_one_game(heuristic_p1, heuristic_p2, search_depth=4):
-    """Play one full AI vs AI game. Returns PLAYER_1, PLAYER_2, or None (tie)."""
+
     board = MancalaBoard()
     while not board.is_game_over():
         mover = board.turn
@@ -21,35 +17,45 @@ def play_one_game(heuristic_p1, heuristic_p2, search_depth=4):
     return board.winner()
 
 
+def play_match(name_a, heuristic_a, name_b, heuristic_b, num_games=100, search_depth=4, verbose=True):
+
+    wins = {name_a: 0, name_b: 0}
+    ties = 0
+
+    for _ in range(num_games):
+        if random.random() < 0.5:
+            p1_name, p1_fn, p2_name, p2_fn = name_a, heuristic_a, name_b, heuristic_b
+        else:
+            p1_name, p1_fn, p2_name, p2_fn = name_b, heuristic_b, name_a, heuristic_a
+
+        winner = play_one_game(p1_fn, p2_fn, search_depth)
+        if winner == PLAYER_1:
+            wins[p1_name] += 1
+        elif winner == PLAYER_2:
+            wins[p2_name] += 1
+        else:
+            ties += 1
+
+    if verbose:
+        print(f"{name_a} vs {name_b}  over {num_games} games (starting player randomized):")
+        print(f"  {name_a} wins: {wins[name_a]}  ({100 * wins[name_a] / num_games:.1f}%)")
+        print(f"  {name_b} wins: {wins[name_b]}  ({100 * wins[name_b] / num_games:.1f}%)")
+        print(f"  ties:           {ties}  ({100 * ties / num_games:.1f}%)")
+
+    return wins[name_a], wins[name_b], ties
+
+
 def run_experiment(name_p1, name_p2, num_games=100, search_depth=4):
     """Play `num_games` games between two named heuristics and report the results."""
     heuristic_p1 = ALL_HEURISTICS[name_p1]
     heuristic_p2 = ALL_HEURISTICS[name_p2]
-
-    p1_wins = 0
-    p2_wins = 0
-    ties = 0
-
-    for _ in range(num_games):
-        winner = play_one_game(heuristic_p1, heuristic_p2, search_depth)
-        if winner == PLAYER_1:
-            p1_wins += 1
-        elif winner == PLAYER_2:
-            p2_wins += 1
-        else:
-            ties += 1
-
-    print(f"{name_p1} (P1) vs {name_p2} (P2)  over {num_games} games:")
-    print(f"  {name_p1} wins: {p1_wins}  ({100 * p1_wins / num_games:.1f}%)")
-    print(f"  {name_p2} wins: {p2_wins}  ({100 * p2_wins / num_games:.1f}%)")
-    print(f"  ties:           {ties}  ({100 * ties / num_games:.1f}%)")
-    return p1_wins, p2_wins, ties
+    return play_match(name_p1, heuristic_p1, name_p2, heuristic_p2, num_games, search_depth)
 
 
 if __name__ == "__main__":
     names = list(ALL_HEURISTICS.keys())
-    num_games = 20        # keep this modest by default since minimax search is slow;
-    search_depth = 4      # raise both once you've confirmed everything works.
+    num_games = 50       
+    search_depth = 4     
 
     print(f"Running every pairwise matchup, {num_games} games each, search depth {search_depth}.\n")
     for i in range(len(names)):
