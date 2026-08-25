@@ -34,7 +34,7 @@ class MancalaBoard:
         return new_board
 
     def valid_moves(self, player):
-        """Pit indices on `player`'s side that still have stones in them."""
+        
         moves = []
         for pit in PITS[player]:
             if self.slots[pit] > 0:
