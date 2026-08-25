@@ -76,10 +76,12 @@ def human_turn(board):
 def play_game(player1_is_human, heuristic_p1, heuristic_p2, search_depth=5):
     board = MancalaBoard()
     board.print_board()
+    move_history = []
 
     while not board.is_game_over():
         mover = board.turn
         print(f"\n--- Player {mover}'s turn ---")
+        is_ai = not (mover == PLAYER_1 and player1_is_human)
 
         if mover == PLAYER_1 and player1_is_human:
             pit = human_turn(board)
@@ -89,6 +91,13 @@ def play_game(player1_is_human, heuristic_p1, heuristic_p2, search_depth=5):
             print(f"AI (Player {mover}) plays pit {pit}")
 
         extra_turn, captured = board.apply_move(pit)
+        move_history.append({
+            "player": mover,
+            "pit": pit,
+            "is_ai": is_ai,
+            "captured": captured,
+            "extra_turn": extra_turn,
+        })
         if captured:
             print(f"Captured {captured} stones!")
         if extra_turn:
@@ -102,6 +111,15 @@ def play_game(player1_is_human, heuristic_p1, heuristic_p2, search_depth=5):
         print("It's a tie!")
     else:
         print(f"Player {winner} wins!")
+
+    ai_moves = [m for m in move_history if m["is_ai"]]
+    print(f"\nAI moves this game ({len(ai_moves)}):")
+    for i, m in enumerate(ai_moves, start=1):
+        captured_note = f" (captured {m['captured']})" if m["captured"] else ""
+        extra_note = " (extra turn)" if m["extra_turn"] else ""
+        print(f"  {i}. Player {m['player']} -> pit {m['pit']}{captured_note}{extra_note}")
+
+    return move_history
 
 
 def parse_args():
