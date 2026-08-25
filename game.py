@@ -21,7 +21,7 @@ def ask_yes_no(question):
 
 
 def pick_heuristic(prompt):
-    """Ask the user to choose a heuristic and return its name."""
+    
     names = list(ALL_HEURISTICS.keys())
     print(prompt)
     for i, name in enumerate(names, start=1):
@@ -31,7 +31,7 @@ def pick_heuristic(prompt):
 
 
 def apply_weights(heuristic_name, weights_arg):
-    """Bind w1..wN onto the named heuristic, from --p*-weights or an interactive prompt."""
+    
     heuristic_fn = ALL_HEURISTICS[heuristic_name]
     count = WEIGHT_COUNTS[heuristic_name]
     if count == 0:
